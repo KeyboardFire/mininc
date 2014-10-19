@@ -1,5 +1,37 @@
 (function($) {
     $.mininc = function(callback) {
+        // best function name obviously
+        var startTimerThingy = function() {
+            var oldTime = new Date();
+            var timerThingy = function() {
+                // calculate delta
+                var currentTime = new Date(),
+                    deltaTime = currentTime - oldTime;
+                oldTime = currentTime;
+
+                for (var i = 0; i < mininc.timers.length; ++i) {
+                    var t = mininc.timers[i];
+                    if (t.paused) continue;
+                    t.cumulDelta += deltaTime;
+                    if (t.cumulDelta >= t.delay) {
+                        t.cumulDelta -= t.delay;
+                        t.callback();
+                    }
+                }
+
+                // requestAnimationFrame polyfill-ish thing
+                (window.requestAnimationFrame ||
+                 window.webkitRequestAnimationFrame ||
+                 window.mozRequestAnimationFrame ||
+                 window.msRequestAnimationFrame ||
+                 window.oRequestAnimationFrame ||
+                 (function(f){setTimeout(f,10)}))(timerThingy);
+            }
+            timerThingy();
+
+            // self-destruct (we only want to do this once)
+            startTimerThingy = function(){};
+        }
         var mininc = {
             vars: {},
             hooks: {},
@@ -38,6 +70,32 @@
                     // so much evil packed into one line
                     x.text(eval('with(mininc.vars){' + d + '}'));
                 });
+            },
+            timers: [],
+            addTimer: function(name, delay, callback) {
+                mininc.timers.push({
+                    name: name,
+                    delay: delay,
+                    callback: callback,
+                    paused: false,
+                    cumulDelta: 0
+                });
+                startTimerThingy();
+            },
+            pauseTimer: function(name) {
+                for (var i = 0; i < mininc.timers.length; ++i) {
+                    if (mininc.timers[i].name === name) {
+                        mininc.timers[i].paused = true;
+                    }
+                }
+            },
+            removeTimer: function(name) {
+                for (var i = 0; i < mininc.timers.length; ++i) {
+                    if (mininc.timers[i].name === name) {
+                        mininc.timers.splice(i--, 1);
+                        continue;
+                    }
+                }
             },
             save: function(key) {
                 localStorage.setItem(key, mininc.exportJSON());
