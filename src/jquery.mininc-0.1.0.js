@@ -64,6 +64,14 @@
             },
             autosave: false
         };
+        mininc.hook.truthy = function(x) { return x; };
+        mininc.hook.falsy = function(x) { return !x; };
+        mininc.hook.gt = function(n) { return function(x) { return x > n; }; };
+        mininc.hook.gte = function(n) { return function(x) { return x >= n; }; };
+        mininc.hook.lt = function(n) { return function(x) { return x < n; }; };
+        mininc.hook.lte = function(n) { return function(x) { return x <= n; }; };
+        mininc.hook.eq = function(y) { return function(x) { return x == y; }; };
+        mininc.hook.neq = function(y) { return function(x) { return x != y; }; };
         callback(mininc);
     };
 })(jQuery);

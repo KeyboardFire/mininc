@@ -11,11 +11,11 @@ $(function() {
         });
 
         // game hooks
-        g.hook('startgameclicked', function(c) { return c }, function() {
+        g.hook('startgameclicked', g.hook.truthy, function() {
             $('#intro').hide('slow');
             $('#game').show('slow');
         });
-        g.hook('clicks', function(c) { return c >= 10; }, function() {
+        g.hook('clicks', g.hook.gte(10), function() {
             $('#click10').show('slow');
         });
 
