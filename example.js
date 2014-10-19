@@ -7,7 +7,7 @@ $(function() {
         });
         $('#click').click(function() {
             g.set('clicks', g.get('clicks') + 1);
-            g.update('#clickcount');
+            g.update('#clickcount [data-mininc]');
         });
 
         // game hooks
@@ -26,6 +26,6 @@ $(function() {
         g.setDefault('clicks', 0);
 
         // set everything up
-        g.update('*');
+        g.update('*[data-mininc]');
     });
 });
