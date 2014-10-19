@@ -32,12 +32,8 @@
                     elsecallback: elsecallback || function(){}
                 });
             },
-            update: function() {
-                var toUpdate = $();
-                for (var i = 0; i < arguments.length; ++i) {
-                    toUpdate = toUpdate.add($(arguments[i]).find('*[data-mininc]'));
-                }
-                toUpdate.each(function() {
+            update: function(toUpdate) {
+                $(toUpdate).each(function() {
                     var x = $(this), d = x.attr('data-mininc');
                     // so much evil packed into one line
                     x.text(eval('with(mininc.vars){' + d + '}'));
