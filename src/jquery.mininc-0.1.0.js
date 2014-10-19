@@ -40,10 +40,19 @@
                 });
             },
             save: function(key) {
-                localStorage.setItem(key, JSON.stringify(mininc.vars));
+                localStorage.setItem(key, mininc.exportJSON());
             },
             restore: function(key) {
-                mininc.vars = JSON.parse(localStorage.getItem(key)) || {};
+                mininc.importJSON(localStorage.getItem(key));
+            },
+            reset: function(key) {
+                localStorage.removeItem(key);
+            },
+            exportJSON: function() {
+                return JSON.stringify(mininc.vars);
+            },
+            importJSON: function(json) {
+                mininc.vars = JSON.parse(json || {});
                 for (var varname in mininc.hooks) {
                     var val = mininc.get(varname);
                     for (var i = 0; i < mininc.hooks[varname].length; ++i) {
@@ -54,9 +63,6 @@
                         }
                     }
                 }
-            },
-            reset: function(key) {
-                localStorage.removeItem(key);
             },
             autosave: false
         };
