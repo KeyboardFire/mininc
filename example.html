@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>Example IncrementalLib game</title>
+        <script src='http://code.jquery.com/jquery-1.11.1.min.js'></script>
+        <script src='src/jquery.mininc-0.1.0.js'></script>
+        <script src='example.js'></script>
+        <style>
+            body > div { display: none; }
+        </style>
+    </head>
+    <body>
+        <div id='intro'>
+            <p>You are about to enter the Example Game of Amazingness!</p>
+            <p><button id='startgame'>Enter</button></p>
+        </div>
+        <div id='game'>
+            <p>This is... the Example Game of Amazingness!</p>
+            <p><button id='click'>Click me</button></p>
+            <p id='clickcount'>You clicked the button <span data-mininc='clicks'>0</span> times.</p>
+        </div>
+    </body>
+</html>
