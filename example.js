@@ -10,5 +10,8 @@ $(function() {
             g.set('clicks', g.get('clicks') + 1);
             g.update('#clickcount');
         });
+        g.hook('clicks', function(c) { return c >= 10; }, function() {
+            $('#click10').show('slow');
+        });
     });
 });
