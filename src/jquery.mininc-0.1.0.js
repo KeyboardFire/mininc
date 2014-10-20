@@ -65,10 +65,16 @@
                 });
             },
             update: function(toUpdate) {
-                $(toUpdate).each(function() {
+                $(toUpdate).find('[data-mininc]').addBack('[data-mininc]').each(function() {
                     var x = $(this), d = x.attr('data-mininc');
-                    // so much evil packed into one line
-                    x.text(eval('with(mininc.vars){' + d + '}'));
+                    if (d.charAt(0) === '#') {
+                        var attr = d.match(/#([^ ]+)/)[1];
+                        d = d.replace(/[^ ]+ /, '');
+                        // so much evil packed into one line
+                        x.attr(attr, eval('with(mininc.vars){' + d + '}'));
+                    } else {
+                        x.text(eval('with(mininc.vars){' + d + '}'));
+                    }
                 });
             },
             timers: [],
@@ -110,7 +116,7 @@
                 return JSON.stringify(mininc.vars);
             },
             importJSON: function(json) {
-                mininc.vars = JSON.parse(json || {});
+                mininc.vars = JSON.parse(json || '{}');
                 for (var varname in mininc.hooks) {
                     var val = mininc.get(varname);
                     for (var i = 0; i < mininc.hooks[varname].length; ++i) {

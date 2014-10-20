@@ -6,19 +6,32 @@
         <script src='src/jquery.mininc-0.1.0.js'></script>
         <script src='example.js'></script>
         <style>
-            body > div, .no { display: none; }
+            html, body, #container { margin: 0; padding: 0; height: 100%; }
+            #container { padding: 10px; }
+            .no { display: none; }
         </style>
     </head>
     <body>
-        <div id='intro'>
-            <p>You are about to enter the Example Game of Amazingness!</p>
-            <p><button id='startgame'>Enter</button></p>
+        <div id='topbar' style='background-color: #DDD; padding: 5px'>
+            Settings | <a href='#' id='reset'>Reset Game</a>
         </div>
-        <div id='game'>
-            <p>This is... the Example Game of Amazingness!</p>
-            <p><button id='click'>Click me</button></p>
-            <p id='clickcount'>You clicked the button <span data-mininc='clicks'>0</span> times.</p>
-            <p id='click10' class='no'>Hooray! Ten clicks!</p>
+        <div id='container'>
+            <div id='intro'>
+                <p>You are about to enter... The Definitely Extremely Realistic Game of Programming!</p>
+                <p><button id='startgame'>Enter</button></p>
+            </div>
+            <div id='game' class='no'>
+                <p>The Definitely Extremely Realistic Game of Programming</p>
+                <p><button id='writecode'>Write code</button></p>
+                <p id='linecount'>You have written <span data-mininc='lines'>0</span> lines of code<span id='totallinescount' class='no'> (<span data-mininc='totallines'>0</span> total)</span>.</p>
+                <p id='programmertitle' class='no'></p>
+                <p id='hire'>
+                    <span id='hire1' class='no'>
+                        <span data-mininc='hirecnt1'>0</span> (<span data-mininc='hirecnt1*hirerate1'>0</span> lines/sec)
+                        <button id='hirebtn1' data-mininc='#disabled hirebtn1cost > lines'>Hire a beginner programmer (cost: rewrite <span data-mininc='hirebtn1cost'>0</span> lines of code)</button>
+                    </span>
+                </p>
+            </div>
         </div>
     </body>
 </html>
