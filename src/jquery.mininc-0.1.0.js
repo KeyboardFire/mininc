@@ -13,7 +13,8 @@
                     var t = mininc.timers[i];
                     if (t.paused) continue;
                     t.cumulDelta += deltaTime;
-                    if (t.cumulDelta >= t.delay) {
+                    var guard = 100;
+                    while (t.cumulDelta >= t.delay && --guard) {
                         t.cumulDelta -= t.delay;
                         t.callback();
                     }

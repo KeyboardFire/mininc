@@ -8,6 +8,13 @@ $(function() {
                 g.set('lines', g.get('lines') + lines);
                 g.set('totallines', g.get('totallines') + lines);
                 g.update('#linecount, #hire');
+            },
+            hire: function(n) {
+                var cost = g.get('hirebtn'+n+'cost');
+                g.set('lines', g.get('lines') - cost);
+                g.set('hirecnt'+n, g.get('hirecnt'+n) + 1);
+                g.set('hirebtn'+n+'cost', Math.floor(cost * 1.1));
+                g.update('#linecount, #hire');
             }
         }
 
@@ -18,13 +25,13 @@ $(function() {
         $('#writecode').click(function() {
             u.write(1);
         });
-        $('#hirebtn1').click(function() {
-            var cost = g.get('hirebtn1cost');
-            g.set('lines', g.get('lines') - cost);
-            g.set('hirecnt1', g.get('hirecnt1') + 1);
-            g.set('hirebtn1cost', Math.floor(cost * 1.1));
-            g.update('#linecount, #hire');
-        });
+        for (var i = 1; i <= 3; ++i) {
+            (function(i) {
+                $('#hirebtn' + i).click(function() {
+                    u.hire(i);
+                });
+            })(i);
+        }
         $('#reset').click(function(e) {
             e.preventDefault();
             if (confirm('Really reset your game and start from scratch?')) {
@@ -46,7 +53,7 @@ $(function() {
         });
         g.hook('totallines', g.hook.gte(50), function() {
             $('#programmertitle').text('You understand the basics of programming.');
-            $('#hire, #hire1').show('slow');
+            $('#hire').show('slow');
         });
         g.hook('totallines', g.hook.gte(100), function() {
             $('#programmertitle').text('Your company is just starting out.');
@@ -61,10 +68,16 @@ $(function() {
         g.setDefault('hirecnt1', 0);
         g.setDefault('hirerate1', 0.125);
         g.setDefault('hirebtn1cost', 50);
+        g.setDefault('hirecnt2', 0);
+        g.setDefault('hirerate2', 1);
+        g.setDefault('hirebtn2cost', 350);
+        g.setDefault('hirecnt3', 0);
+        g.setDefault('hirerate3', 5);
+        g.setDefault('hirebtn3cost', 1500);
 
         // intialize timers
         g.addTimer('persecond', 1000, function() {
-            u.write(g.get('hirecnt1') * g.get('hirerate1'));
+            for (var i = 1; i <= 3; ++i) u.write(g.get('hirecnt'+i) * g.get('hirerate'+i));
         });
 
         // set everything up
